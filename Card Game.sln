@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Card Game", "Card Game.csproj", "{8F2F6FC4-255B-4903-B919-0D981F034BB6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+	Debug|Any CPU = Debug|Any CPU
+	Release|Any CPU = Release|Any CPU
+	Tools|Any CPU = Tools|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8F2F6FC4-255B-4903-B919-0D981F034BB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2F6FC4-255B-4903-B919-0D981F034BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2F6FC4-255B-4903-B919-0D981F034BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2F6FC4-255B-4903-B919-0D981F034BB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2F6FC4-255B-4903-B919-0D981F034BB6}.Tools|Any CPU.ActiveCfg = Tools|Any CPU
+		{8F2F6FC4-255B-4903-B919-0D981F034BB6}.Tools|Any CPU.Build.0 = Tools|Any CPU
+	EndGlobalSection
+EndGlobal

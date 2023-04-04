@@ -18,6 +18,10 @@ _global_script_class_icons={
 config/name="Card Game"
 config/icon="res://icon.png"
 
+[autoload]
+
+background_music="*res://background_music.tscn"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

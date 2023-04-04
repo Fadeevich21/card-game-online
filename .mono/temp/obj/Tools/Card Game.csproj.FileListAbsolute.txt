@@ -1,0 +1,6 @@
+/home/fadeevich/game/Card Game/.mono/temp/bin/Tools/Card Game.dll
+/home/fadeevich/game/Card Game/.mono/temp/bin/Tools/Card Game.pdb
+/home/fadeevich/game/Card Game/.mono/temp/obj/Tools/Card Game.csprojAssemblyReference.cache
+/home/fadeevich/game/Card Game/.mono/temp/obj/Tools/Card Game.csproj.CoreCompileInputs.cache
+/home/fadeevich/game/Card Game/.mono/temp/obj/Tools/Card Game.dll
+/home/fadeevich/game/Card Game/.mono/temp/obj/Tools/Card Game.pdb
