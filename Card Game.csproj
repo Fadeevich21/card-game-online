@@ -53,6 +53,10 @@
     <Compile Include="scripts\ButtonExit.cs" />
     <Compile Include="scripts\ButtonSettings.cs" />
     <Compile Include="scripts\ButtonStart.cs" />
+    <Compile Include="scripts\HSlider.cs" />
+    <Compile Include="scripts\HSlider2.cs" />
+    <Compile Include="scripts\HSlider3.cs" />
+    <Compile Include="scripts\ReturnButton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

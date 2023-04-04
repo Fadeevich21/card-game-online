@@ -23,6 +23,7 @@ text = "Start"
 script = ExtResource( 2 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ButtonStart"]
+bus = "SFX"
 
 [node name="ButtonSettings" type="Button" parent="."]
 margin_left = 450.0
@@ -33,6 +34,7 @@ text = "Settings"
 script = ExtResource( 3 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ButtonSettings"]
+bus = "SFX"
 
 [node name="ButtonExit" type="Button" parent="."]
 margin_left = 450.0
@@ -43,4 +45,5 @@ text = "Exit"
 script = ExtResource( 4 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="ButtonExit"]
+bus = "SFX"
 
