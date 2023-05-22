@@ -15,6 +15,8 @@ public class ButtonStart : Button
         var streamPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         streamPlayer.Stream = GD.Load<AudioStream>("res://musics/click_button.wav");
         streamPlayer.Play();
+		
+		GetTree().ChangeScene("res://scenes/Game.tscn");
     }
 
     public override void _Process(float delta)

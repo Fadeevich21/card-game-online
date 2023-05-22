@@ -16,7 +16,7 @@ public class ReturnButton : Button
         streamPlayer.Stream = GD.Load<AudioStream>("res://musics/click_button.wav");
         streamPlayer.Play();
 
-        GetTree().ChangeScene("res://Control.tscn");
+        GetTree().ChangeScene("res://scenes/Control.tscn");
     }
 
     public override void _Process(float delta)

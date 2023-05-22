@@ -16,12 +16,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Card Game"
-run/main_scene="res://Control.tscn"
+run/main_scene="res://scenes/Control.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
-background_music="*res://background_music.tscn"
+background_music="*res://scenes/background_music.tscn"
 
 [rendering]
 
