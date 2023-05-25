@@ -1,0 +1,197 @@
+{
+  "protocol_version" : "0.0.2",
+  "configuration" : {
+    "version" : "5.18.0.240 (tarball)",
+    "tlc" : "__thread",
+    "sigsgev" : "altstack",
+    "notifications" : "epoll",
+    "architecture" : "amd64",
+    "disabled_features" : "none",
+    "smallconfig" : "disabled",
+    "bigarrays" : "disabled",
+    "softdebug" : "enabled",
+    "interpreter" : "enabled",
+    "llvm_support" : "disabled",
+    "suspend" : "preemptive"
+  },
+  "memory" : {
+    "minor_gc_time" : "81719",
+    "major_gc_time" : "1258622",
+    "minor_gc_count" : "26",
+    "major_gc_count" : "100",
+    "major_gc_time_concurrent" : "0"
+ },
+  "threads" : [
+ {
+    "is_managed" : false,
+    "crashed" : false,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4bd8352700",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Thread Pool Wor",
+    "ctx" : {
+      "IP" : "0x7f4c0403ba15",
+      "SP" : "0x7f4bd8351b40",
+      "BP" : "0x45270c8"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ },
+ {
+    "is_managed" : false,
+    "crashed" : false,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4bc3dfe700",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Thread Pool Wor",
+    "ctx" : {
+      "IP" : "0x7f4c0403ba15",
+      "SP" : "0x7f4bc3dfdb40",
+      "BP" : "0x45270c8"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ },
+ {
+    "is_managed" : false,
+    "crashed" : false,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4bc39fc700",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Thread Pool Wor",
+    "ctx" : {
+      "IP" : "0x7f4c0403ba15",
+      "SP" : "0x7f4bc39fbb40",
+      "BP" : "0x45270c8"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ },
+ {
+    "is_managed" : false,
+    "crashed" : false,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4bc35fa700",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Thread Pool Wor",
+    "ctx" : {
+      "IP" : "0x7f4c0403ba15",
+      "SP" : "0x7f4bc35f9b40",
+      "BP" : "0x45270c8"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ },
+ {
+    "is_managed" : false,
+    "crashed" : false,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4bedb7c700",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Finalizer",
+    "ctx" : {
+      "IP" : "0x7f4c0403b827",
+      "SP" : "0x7f4bedb7bb30",
+      "BP" : "0x451f7c0"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ },
+ {
+    "is_managed" : false,
+    "crashed" : false,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4bc3bfd700",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Thread Pool Wor",
+    "ctx" : {
+      "IP" : "0x7f4c0403ba15",
+      "SP" : "0x7f4bc3bfcb40",
+      "BP" : "0x45270c8"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ },
+ {
+    "is_managed" : false,
+    "crashed" : false,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4bc37fb700",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Godot_v3.1-stab",
+    "ctx" : {
+      "IP" : "0x7f4c04039709",
+      "SP" : "0x7f4bc37fab10",
+      "BP" : "0x45accc0"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ },
+ {
+    "is_managed" : false,
+    "crashed" : true,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4c043ce900",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Godot_v3.1-stab",
+    "ctx" : {
+      "IP" : "0x7f4c03582238",
+      "SP" : "0x7ffca6e53748",
+      "BP" : "0x7ffca6e53888"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ },
+ {
+    "is_managed" : false,
+    "crashed" : false,
+    "managed_thread_ptr" : "0x0",
+    "native_thread_id" : "0x7f4bc33f9700",
+    "thread_info_addr" : "0x0",
+    "thread_name" : "Thread Pool Wor",
+    "ctx" : {
+      "IP" : "0x7f4c0403ba15",
+      "SP" : "0x7f4bc33f8b40",
+      "BP" : "0x45270c8"
+  },
+    "unmanaged_frames" : [
+  {
+      "native_address" : "unregistered"
+   }
+
+  ]
+ }
+ ]
+}

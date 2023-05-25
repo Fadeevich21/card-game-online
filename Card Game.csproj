@@ -50,23 +50,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="scripts\Bot.cs" />
-    <Compile Include="scripts\ButtonExit.cs" />
-    <Compile Include="scripts\ButtonSettings.cs" />
-    <Compile Include="scripts\ButtonStart.cs" />
-    <Compile Include="scripts\Card.cs" />
-    <Compile Include="scripts\CardTypes.cs" />
-    <Compile Include="scripts\Damage.cs" />
-    <Compile Include="scripts\Game.cs" />
-    <Compile Include="scripts\Power.cs" />
-    <Compile Include="scripts\Health.cs" />
-    <Compile Include="scripts\HSlider.cs" />
-    <Compile Include="scripts\HSlider2.cs" />
-    <Compile Include="scripts\HSlider3.cs" />
-    <Compile Include="scripts\IPlayer.cs" />
-    <Compile Include="scripts\Player.cs" />
-    <Compile Include="scripts\ReturnButton.cs" />
-    <Compile Include="scripts\User.cs" />
+    <Compile Include="scripts\button\ButtonExit.cs" />
+    <Compile Include="scripts\button\ButtonStart.cs" />
+    <Compile Include="scripts\card\Card.cs" />
+    <Compile Include="scripts\card\CardBase.cs" />
+    <Compile Include="scripts\card\CardsDatabase.cs" />
+    <Compile Include="scripts\GameMenu\GameMenu.cs" />
+    <Compile Include="scripts\player\Player.cs" />
+    <Compile Include="scripts\PlaySpace.cs" />
+    <Compile Include="scripts\Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="scenes\" />
