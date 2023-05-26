@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://scripts/EndGame.cs" type="Script" id=1]
+[ext_resource path="res://images/background.jpg" type="Texture" id=2]
+
+[node name="EndGame" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+texture = ExtResource( 2 )
+
+[node name="GameStatus" type="Label" parent="."]
+margin_left = 464.0
+margin_top = 224.657
+margin_right = 556.0
+margin_bottom = 265.657
+text = "status"
+align = 1
+valign = 1
+
+[node name="Exit" type="Button" parent="."]
+margin_left = 462.527
+margin_top = 446.203
+margin_right = 574.527
+margin_bottom = 492.203
+text = "Exit"
+
+[connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]

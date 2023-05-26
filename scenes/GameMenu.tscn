@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://scripts/GameMenu/GameMenu.cs" type="Script" id=1]
+[ext_resource path="res://scripts/GameMenu.cs" type="Script" id=1]
 [ext_resource path="res://images/background.jpg" type="Texture" id=2]
 
 [node name="GameMenu" type="Node2D"]

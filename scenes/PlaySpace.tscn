@@ -7,7 +7,7 @@
 script = ExtResource( 1 )
 
 [node name="Background" type="Sprite" parent="."]
-position = Vector2( 512.006, 300 )
+position = Vector2( 514.87, 298.568 )
 texture = ExtResource( 2 )
 
 [node name="CardOnFieldPosition" type="Node2D" parent="."]
@@ -27,10 +27,19 @@ margin_right = 869.406
 margin_bottom = 332.974
 text = "Pass"
 
-[node name="Player1Pos" type="Node2D" parent="."]
+[node name="OpponentPlayerPos" type="Node2D" parent="."]
 position = Vector2( 507.419, 58.4961 )
 rotation = -3.14159
 
-[node name="Player2Pos" type="Node2D" parent="."]
+[node name="MyPlayerPos" type="Node2D" parent="."]
 position = Vector2( 503.338, 537.348 )
 
+[node name="CurrentPlayer" type="Label" parent="."]
+margin_left = 100.238
+margin_top = 276.511
+margin_right = 220.238
+margin_bottom = 311.511
+text = "Player"
+
+[connection signal="pressed" from="GetCard" to="." method="_on_GetCard_pressed"]
+[connection signal="pressed" from="Pass" to="." method="_on_Pass_pressed"]

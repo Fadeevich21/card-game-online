@@ -1,3 +1,4 @@
+using System;
 using CardGame.scripts.card;
 using CardGame.scripts.player;
 using Godot;
@@ -6,125 +7,257 @@ namespace CardGame.scripts
 {
     public abstract class PlaySpace : Node2D
     {
-        private readonly string[] _players = { "player1", "player2" };
+        private const int CardsGenerate = 5;
+        
+        private string _player = "";
+
+        private const string Player1 = "player1";
+        private const string Player2 = "player2";
+        private readonly string[] _players = { Player1, Player2 };
         private int _currentTurnIndex;
         private string CurrentPlayer => _players[_currentTurnIndex];
 
         public override void _Ready()
         {
-            InitGetCardButton();
-            InitPassButton();
+            InitCardOnField();
 
-            var cardOnField = GD.Load<PackedScene>("res://scenes/Card.tscn").Instance();
-            cardOnField.Name = "CardOnField";
-            AddChild(cardOnField);
-            if (IsNetworkMaster())
-            {
-                var cardOnFieldPos = GetNode<Node2D>("CardOnFieldPosition").Position;
-                var card = CardGenerate.Generate();
-                InitFirstCardOnField(card, cardOnFieldPos);
-                Rpc(nameof(InitFirstCardOnField), card, cardOnFieldPos);
-            }
+            if (!IsNetworkMaster()) return;
+            var playerIndex = new Random().Next(0, 2);
+            SetPlayer(_players[playerIndex]);
+            Rpc(nameof(SetPlayer), _players[1 - playerIndex]);
 
-            var player1Scene = GD.Load<PackedScene>("res://scenes/Player.tscn").Instance();
-            player1Scene.Name = "player1";
-            player1Scene.SetNetworkMaster(GetTree().GetNetworkUniqueId());
-            AddChild(player1Scene);
-            if (GetNode("player1") is Player player1)
-            {
-                player1.GlobalTransform = GetNode<Node2D>("Player1Pos").GlobalTransform;
-                player1.RotationDegrees = 180;
-                if (IsNetworkMaster())
-                    for (var i = 0; i < 5; i++)
-                    {
-                        var card = CardGenerate.Generate();
-                        player1.AddCard(card);
-                        player1.Rpc("AddCard", card);
-                    }
-            }
+            CreatePlayer1();
+            Rpc(nameof(CreatePlayer1));
+            CreatePlayer2();
+            Rpc(nameof(CreatePlayer2));
 
-            var player2Scene = GD.Load<PackedScene>("res://scenes/Player.tscn").Instance();
-            player2Scene.Name = "player2";
-            player2Scene.SetNetworkMaster(Singleton.UserId);
-            AddChild(player2Scene);
-            if (GetNode("player2") is Player player2)
-            {
-                player2.GlobalTransform = GetNode<Node2D>("Player2Pos").GlobalTransform;
-                if (IsNetworkMaster())
-                    for (var i = 0; i < 5; i++)
-                    {
-                        var card = CardGenerate.Generate();
-                        player2.AddCard(card);
-                        player2.Rpc("AddCard", card);
-                    }
-            }
+            SetPositionPlayer1();
+            Rpc(nameof(SetPositionPlayer1));
+            SetPositionPlayer2();
+            Rpc(nameof(SetPositionPlayer2));
 
-            PassButtonDisabled();
-            NextTurn();
-            Rpc(nameof(NextTurn));
-        }
-
-        public bool PlayerRemoveCard(Card card)
-        {
-            if (!OnCardClickedChangeCardOnField(card)) return false;
-            OnCardClickedButtonSetup();
+            AddCardsPlayer1();
+            AddCardsPlayer2();
 
             NextTurn();
             Rpc(nameof(NextTurn));
-
-            return true;
-        }
-
-        private void InitGetCardButton()
-        {
-            var getCardButton = GetNode("GetCard");
-            getCardButton.Connect("pressed", this, nameof(OnGetCardButtonPressed));
-        }
-
-        private void InitPassButton()
-        {
-            var passButton = GetNode("Pass");
-            passButton.Connect("pressed", this, nameof(OnPassButtonPressed));
         }
 
         [Remote]
-        public void InitFirstCardOnField(Card card, Vector2 position)
+        public void SetPlayer(string player)
         {
+            _player = player;
+        }
+
+        private void SetLabelCurrentPlayer()
+        {
+            if (GetNode("CurrentPlayer") is Label labelCurrentPlayer)
+                labelCurrentPlayer.Text = _player == CurrentPlayer ? "Your move" : "Opponent's move";
+        }
+
+        private void InitCardOnField()
+        {
+            GD.Print("init card on field");
+            var cardOnField = Card.Create();
+            if (cardOnField == null) return;
+            cardOnField.Name = "CardOnField";
+            AddChild(cardOnField);
+
+            if (!IsNetworkMaster()) return;
+            var card = CardGenerate.Generate();
+            if (card == null) return;
+            var position = GetNode<Node2D>("CardOnFieldPosition").Position;
+            SetupCardOnField(card.Serialize(), position);
+            Rpc(nameof(SetupCardOnField), card.Serialize(), position);
+        }
+
+        [Remote]
+        public void CreatePlayer1()
+        {
+            var playerScene = Player.Create();
+            playerScene.Name = Player1;
+            playerScene.SetNetworkMaster(GetTree().GetNetworkUniqueId());
+            AddChild(playerScene);
+        }
+
+        [Remote]
+        public void SetPositionPlayer1()
+        {
+            if (!(GetNode(Player1) is Player player)) return;
+            if (_player == Player1)
+                SetPositionMyPlayer(player);
+            else
+                SetPositionOpponentPlayer(player);
+        }
+
+        private void AddCardsPlayer1()
+        {
+            if (!(GetNode(Player1) is Player player)) return;
+            if (!IsNetworkMaster()) return;
+            SetupPlayer(player);
+        }
+
+        [Remote]
+        public void CreatePlayer2()
+        {
+            var playerScene = Player.Create();
+            playerScene.Name = Player2;
+            playerScene.SetNetworkMaster(Singleton.UserId);
+            AddChild(playerScene);
+        }
+
+        [Remote]
+        public void SetPositionPlayer2()
+        {
+            if (!(GetNode(Player2) is Player player)) return;
+            if (_player == Player2)
+                SetPositionMyPlayer(player);
+            else
+                SetPositionOpponentPlayer(player);
+        }
+
+        private void AddCardsPlayer2()
+        {
+            if (!(GetNode(Player2) is Player player)) return;
+            if (!IsNetworkMaster()) return;
+            SetupPlayer(player);
+        }
+
+        private void SetPositionMyPlayer(Player player)
+        {
+            player.GlobalTransform = GetNode<Node2D>("MyPlayerPos").GlobalTransform;
+        }
+
+        private void SetPositionOpponentPlayer(Player player)
+        {
+            player.GlobalTransform = GetNode<Node2D>("OpponentPlayerPos").GlobalTransform;
+            player.RotationDegrees = 180;
+        }
+
+        private void SetupPlayer(Player player)
+        {
+            GD.Print("setup player");
+            for (var i = 0; i < CardsGenerate; i++)
+            {
+                var card = CardGenerate.Generate();
+                AddCard(player.Name, card.Serialize());
+                Rpc(nameof(AddCard), player.Name, card.Serialize());
+                // player.AddCard(card.Serialize());
+                // player.Rpc("AddCard", card.Serialize());
+            }
+        }
+
+        [Remote]
+        public  void AddCard(string playerName, byte[] cardDataSerialize)
+        {
+            var cardData = Card.Deserialize(cardDataSerialize);
+            if (_player != playerName)
+                cardData.TexturePath = cardData.TextureCardShirtPath;
+            if (!(GetNode(playerName) is Player player)) return;
+            player.AddCard(cardData);
+        }
+        
+        public void OnCardClicked(Card card)
+        {
+            if (_player != CurrentPlayer) return;
+
+            GD.Print("on card clicked");
+            if (!OnCardClickedChangeCardOnField(card)) return;
+            OnCardClickedButtonSetup();
+
+            if (!(GetNode(CurrentPlayer) is Player player)) return;
+            player.RemoveCard(card.Name);
+            player.Rpc("RemoveCard", card.Name);
+
+            if (CheckEndGame())
+            {
+                EndGame(GameStatus.Win);
+                Rpc(nameof(EndGame), GameStatus.Lose);
+            }
+
+            switch (card.Type)
+            {
+                case CardType.Skip:
+                    NextTurn();
+                    Rpc(nameof(NextTurn));
+                    break;
+                case CardType.AddCard:
+                {
+                    var nextPlayerIndex = (_currentTurnIndex + 1) % _players.Length;
+                    var nextPlayerName = _players[nextPlayerIndex];
+
+                    if (!(GetNode(nextPlayerName) is Player nextPlayer)) return;
+                    var cardAdded = CardGenerate.Generate();
+                    AddCard(nextPlayer.Name, cardAdded.Serialize());
+                    Rpc(nameof(AddCard), nextPlayer.Name, cardAdded.Serialize());
+                    break;
+                }
+            }
+
+            NextTurn();
+            Rpc(nameof(NextTurn));
+        }
+
+        private bool CheckEndGame()
+        {
+            if (!(GetNode(CurrentPlayer) is Player player)) return false;
+
+            return player.GetNode("Cards").GetChildren().Count == 0;
+        }
+        
+        [Remote]
+        public void EndGame(GameStatus status)
+        {
+            if (!(GD.Load<PackedScene>("res://scenes/EndGame.tscn").Instance() is EndGame endGame)) return;
+            endGame.SetGameStatus(status);
+            GetTree().GetRoot().AddChild(endGame);
+
+            QueueFree();
+        }
+
+        [Remote]
+        public void SetupCardOnField(byte[] cardSerialized, Vector2 position)
+        {
+            GD.Print("setup card on field");
+
+            var cardData = Card.Deserialize(cardSerialized);
+            if (cardData == null) return;
+
             if (!(GetNode("CardOnField") is Card cardOnField)) return;
             cardOnField.GlobalPosition = position;
-            ChangeCardOnField(card);
+            cardOnField.SetParamsCardWithoutName(cardData);
         }
 
         [Remote]
         public void NextTurn()
         {
-            var prevPlayer = GetNode(CurrentPlayer) as Player;
-            prevPlayer?.SetCardsClicked(false);
+            if (!(GetNode(CurrentPlayer) is Player prevPlayer)) return;
+            prevPlayer.SetCardsClicked(false);
+            if (_player == CurrentPlayer)
+            {
+                GetCardButtonDisabled();
+                PassButtonDisabled();
+            }
 
             _currentTurnIndex = (_currentTurnIndex + 1) % _players.Length;
-            var player = GetNode(CurrentPlayer) as Player;
-            player?.SetCardsClicked(true);
-        }
+            if (!(GetNode(CurrentPlayer) is Player player)) return;
+            player.SetCardsClicked(true);
+            if (_player == CurrentPlayer)
+            {
+                GetCardButtonEnabled();
+                PassButtonDisabled();
+            }
 
-
-        [Remote]
-        public void ChangeCardOnField(Card card)
-        {
-            if (!(GetNode("CardOnField") is Card cardOnField)) return;
-
-            cardOnField.Color = card.Color;
-            cardOnField.Type = card.Type;
-            cardOnField.Texture = card.Texture;
+            SetLabelCurrentPlayer();
         }
 
         private bool OnCardClickedChangeCardOnField(Card card)
         {
-            GD.Print("check change card start");
+            GD.Print("on card clicked change card on field");
             if (!CheckChangeCardOnField(card)) return false;
-            GD.Print("check change card end");
 
-            ChangeCardOnField(card);
-            Rpc(nameof(ChangeCardOnField), card);
+            ChangeCardOnField(card.Serialize());
+            Rpc(nameof(ChangeCardOnField), card.Serialize());
 
             return true;
         }
@@ -137,62 +270,63 @@ namespace CardGame.scripts
 
         private bool CheckChangeCardOnField(Card card)
         {
+            GD.Print("check change card on field");
+
             var cardOnField = GetNode("CardOnField") as Card;
-            GD.Print(card.Color);
-            GD.Print(card.Type);
-            GD.Print(cardOnField.Color == card.Color);
-            GD.Print(cardOnField.Type == card.Type);
-            
+
             return cardOnField != null && (cardOnField.Color == card.Color || cardOnField.Type == card.Type);
         }
 
-        private void ButtonDisabled(string buttonName)
+        [Remote]
+        public void ChangeCardOnField(byte[] cardDataSerialized)
         {
-            if (GetNode(buttonName) is Button button) button.Disabled = true;
+            var cardData = Card.Deserialize(cardDataSerialized);
+            GD.Print("change card on field");
+            if (!(GetNode("CardOnField") is Card cardOnField)) return;
+
+            cardOnField.Color = cardData.Color;
+            cardOnField.Type = cardData.Type;
+            cardOnField.SetTexture_(cardData.TexturePath);
         }
 
-        private void ButtonEnabled(string buttonName)
+        private void SetButtonDisabled(string buttonName, bool isDisabled)
         {
-            if (GetNode(buttonName) is Button button) button.Disabled = false;
+            if (GetNode(buttonName) is Button button) button.Disabled = isDisabled;
         }
 
         private void GetCardButtonDisabled()
         {
-            ButtonDisabled("GetCard");
+            SetButtonDisabled("GetCard", true);
         }
 
         private void GetCardButtonEnabled()
         {
-            ButtonEnabled("GetCard");
+            SetButtonDisabled("GetCard", false);
         }
 
         private void PassButtonDisabled()
         {
-            ButtonDisabled("Pass");
+            SetButtonDisabled("Pass", true);
         }
 
         private void PassButtonEnabled()
         {
-            ButtonEnabled("Pass");
+            SetButtonDisabled("Pass", false);
         }
 
-        public void OnGetCardButtonPressed()
+        private void _on_GetCard_pressed()
         {
-            GD.Print("get card");
-            if (!(GetNode(CurrentPlayer) is Player player)) return;
+            if (!(GetNode(_player) is Player player)) return;
 
             var card = CardGenerate.Generate();
-            player.AddCard(card);
-            player.Rpc("AddCard", card);
+            AddCard(player.Name, card.Serialize());
+            Rpc(nameof(AddCard), player.Name, card.Serialize());
             GetCardButtonDisabled();
             PassButtonEnabled();
         }
 
-        public void OnPassButtonPressed()
+        private void _on_Pass_pressed()
         {
-            GD.Print("pass");
-            PassButtonDisabled();
-            GetCardButtonEnabled();
             NextTurn();
             Rpc(nameof(NextTurn));
         }

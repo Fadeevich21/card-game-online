@@ -22,62 +22,6 @@
     "major_gc_time_concurrent" : "0"
  },
   "threads" : [
- {
-    "is_managed" : false,
-    "crashed" : true,
-    "managed_thread_ptr" : "0x0",
-    "native_thread_id" : "0x7f98fb106300",
-    "thread_info_addr" : "0x0",
-    "thread_name" : "Card Game.x86_6",
-    "ctx" : {
-      "IP" : "0x7f98fbc4de5c",
-      "SP" : "0x7ffc39521270",
-      "BP" : "0x7f98fb106300"
-  },
-    "unmanaged_frames" : [
-  {
-      "native_address" : "unregistered"
-   }
 
-  ]
- },
- {
-    "is_managed" : false,
-    "crashed" : false,
-    "managed_thread_ptr" : "0x0",
-    "native_thread_id" : "0x7f98b8ffe6c0",
-    "thread_info_addr" : "0x0",
-    "thread_name" : "Finalizer",
-    "ctx" : {
-      "IP" : "0x7f98fbc48d16",
-      "SP" : "0x7f98b8ffdbc0",
-      "BP" : "(nil)"
-  },
-    "unmanaged_frames" : [
-  {
-      "native_address" : "unregistered"
-   }
-
-  ]
- },
- {
-    "is_managed" : false,
-    "crashed" : false,
-    "managed_thread_ptr" : "0x0",
-    "native_thread_id" : "0x7f98b8dfd6c0",
-    "thread_info_addr" : "0x0",
-    "thread_name" : "Debugger agent",
-    "ctx" : {
-      "IP" : "0x7f98fbccea0f",
-      "SP" : "0x7f98b8dfc960",
-      "BP" : "0xf"
-  },
-    "unmanaged_frames" : [
-  {
-      "native_address" : "unregistered"
-   }
-
-  ]
- }
  ]
 }

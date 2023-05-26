@@ -50,13 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="scripts\button\ButtonExit.cs" />
-    <Compile Include="scripts\button\ButtonStart.cs" />
     <Compile Include="scripts\card\Card.cs" />
-    <Compile Include="scripts\card\CardBase.cs" />
+    <Compile Include="scripts\card\CardData.cs" />
+    <Compile Include="scripts\card\CardGenerate.cs" />
     <Compile Include="scripts\card\CardsDatabase.cs" />
-    <Compile Include="scripts\GameMenu\GameMenu.cs" />
-    <Compile Include="scripts\player\Player.cs" />
+    <Compile Include="scripts\Control.cs" />
+    <Compile Include="scripts\EndGame.cs" />
+    <Compile Include="scripts\GameMenu.cs" />
+    <Compile Include="scripts\Player.cs" />
     <Compile Include="scripts\PlaySpace.cs" />
     <Compile Include="scripts\Singleton.cs" />
   </ItemGroup>
